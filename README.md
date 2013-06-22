@@ -1,9 +1,16 @@
 Forkraft
 ========
 
-a node cluster helper lib
+a node cluster helper lib.
 
-### Clusterize usage
+features: clusterize, messaging
+
+### Install
+```
+	npm install forkraft
+```
+
+## clusterize
 typical server.js:
 ```
 var clusterize = require('forkraft').clusterize;
@@ -46,7 +53,7 @@ clusterize({
 });
 ```
 
-### options reference:
+#### clusterize options reference:
 - *worker*            - required, a function to invoke on worker processes or a name of a javascript filename
 
 - *master*            - optional, will be fired after forking code, can be a function or a javascript filename
@@ -66,5 +73,56 @@ clusterize({
 
 - *env* 				- optional, environment of the worker
 
+-----------------------------------------------------------------------------------------------------------
+##Messaging
+####Simple messaging:
+instead of this:
+```
+	// code for creating cluster in master omitted ...
+
+	worker.on('message', function(message) {
+		if (message.type && message.type === 'myMessageType')
+			doSomethingWithMyMessage(message);
+	});
+```
+use this:
+```
+	// code for creating cluster in master omitted ...
+
+	var Messaging = require('forkraft').Messaging;
+
+	Messaging.on('myMessageType', doSomethingWithMyMessage);
+```
+####Broadcast
+at master:
+```
+	// code for creating cluster in master omitted ...
+
+	var Messaging = require('forkraft').Messaging;
+	Messaging.setupMasterMessageRelay();
+
+	Messaging.broadcast({ type: 'boom' })
+```
+at worker1:
+```
+	var Messaging = require('forkraft').Messaging;
+	process.on('message', Messaging.handleMessage('boom'), function(boomMessage) {
+		Messaging.broadcast({ type: 'bam' });
+	});
+```
+at worker2:
+```
+var Messaging = require('forkraft').Messaging;
+process.on('message', Messaging.handleMessage('bam', function() {
+	console.log('boom on worker1 set off a bam on worker2');
+}));
+```
+at worker3:
+```
+var Messaging = require('forkraft').Messaging;
+process.on('message', Messaging.handleMessage('bam', function() {
+	console.log('boom on worker1 set off a bam on worker3');
+}));
+```
 ###TODO
 expand tests
