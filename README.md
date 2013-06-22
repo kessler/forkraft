@@ -132,29 +132,30 @@ do this:
 Yes, it looks exactly the same as the code used in the worker...
 ####Broadcasting
 
-                     Messaging.broadcast() on master process
-                     +--------+       +--------+      +--------+
-                     | worker |<------+ master +----->| worker |
-                     +--------+       +---+----+      +--------+
-                                          |
-                                          |
-                                          v
-                                     +--------+
-                                     | worker |
-                                     +--------+
-
--------------------------------------------------------------------------------
-
-                     Messaging.broadcast() on worker process
-                     +--------+       +--------+      +--------+
-                     | worker +------>| master +----->| worker |
-                     +--------+       +----+---+      +--------+
-                                           |
-                                           |
-                                           v
-                                     +--------+
-                                     | worker |
-                                     +--------+                                     
+#####Messaging.broadcast() on master process
+```
++--------+       +--------+      +--------+
+| worker |<------+ master +----->| worker |
++--------+       +---+----+      +--------+
+                     |
+                     |
+                     v
+                 +--------+
+                 | worker |
+                 +--------+
+```
+#####Messaging.broadcast() on worker process
+```                     
++--------+       +--------+      +--------+
+| worker +------>| master +----->| worker |
++--------+       +----+---+      +--------+
+                      |
+                      |
+                      v
+ 	    		  +--------+
+                  | worker |
+                  +--------+                                     
+```
 at master:
 ```
 	// code for creating cluster in master omitted ...
