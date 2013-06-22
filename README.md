@@ -75,20 +75,42 @@ clusterize({
 
 -----------------------------------------------------------------------------------------------------------
 ##Messaging
-####Simple messaging:
-instead of this code in a worker:
-```	
-	process.on('message', function(message) {
-		if (message.type && message.type === 'myMessageType')
-			doSomethingWithMyMessage(message);
+Built on top of a simple type/payload protocol
+
+####Simple example
+master to worker:
+```
+	var Messaging = require('forkraft').Messaging;
+	
+	Messaging.on('moo', function(payload) {
+		console.log(payload);
+	});
+
+	Messaging.send('boom', 'this is the payload', ...reference to worker or worker id...);
+```
+worker to master
+```
+	var Messaging = require('forkraft').Messaging;
+	
+	Messaging.on('boom', function(payload) {
+		console.log(payload);
+		Messaging.send('moo', 'this is a different payload');
 	});
 ```
-use this:
+####More on receiving:
+this:
 ```	
 	function doSomethingWithMyMessage(msg) { // will only get called when message type matches }
 
 	var Messaging = require('forkraft').Messaging;
 	Messaging.on('myMessageType', doSomethingWithMyMessage);
+```
+replaces this:
+```	
+	process.on('message', function(message) {
+		if (message.type && message.type === 'myMessageType')
+			doSomethingWithMyMessage(message);
+	});
 ```
 also works the same in master process, instead of:
 ```
@@ -108,7 +130,7 @@ do this:
 	Messaging.on('myMessageType', doSomethingWithMyMessage);
 ```
 Yes, it looks exactly the same as the code used in the worker...
-####Broadcast
+####Broadcasting
 at master:
 ```
 	// code for creating cluster in master omitted ...
@@ -121,23 +143,25 @@ at master:
 at worker1:
 ```
 	var Messaging = require('forkraft').Messaging;
-	process.on('message', Messaging.handleMessage('boom'), function(boomMessage) {
+	Messaging.on('boom'), function(boomMessage) {
 		Messaging.broadcast({ type: 'bam' });
 	});
 ```
 at worker2:
 ```
 var Messaging = require('forkraft').Messaging;
-process.on('message', Messaging.handleMessage('bam', function() {
+Messaging.on('bam', function() {
 	console.log('boom on worker1 set off a bam on worker2');
-}));
+});
 ```
 at worker3:
 ```
 var Messaging = require('forkraft').Messaging;
-process.on('message', Messaging.handleMessage('bam', function() {
+Messaging.on('bam', function() {
 	console.log('boom on worker1 set off a bam on worker3');
-}));
+});
 ```
 ###TODO
-expand tests
+- clusterize tests need expansion, they dont test all configuration options
+- Messaging needs a live test with real processes (currently has only unit tests with mocks)
+- add support for handles exchange
