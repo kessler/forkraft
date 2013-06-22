@@ -133,8 +133,6 @@ Yes, it looks exactly the same as the code used in the worker...
 ####Broadcasting
 
                      Messaging.broadcast() on master process
-
-
                      +--------+       +--------+      +--------+
                      | worker |<------+ master +----->| worker |
                      +--------+       +---+----+      +--------+
@@ -148,8 +146,6 @@ Yes, it looks exactly the same as the code used in the worker...
 -------------------------------------------------------------------------------
 
                      Messaging.broadcast() on worker process
-
-
                      +--------+       +--------+      +--------+
                      | worker +------>| master +----->| worker |
                      +--------+       +----+---+      +--------+
