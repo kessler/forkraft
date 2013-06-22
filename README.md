@@ -76,23 +76,38 @@ clusterize({
 -----------------------------------------------------------------------------------------------------------
 ##Messaging
 ####Simple messaging:
-instead of this:
-```
-	// code for creating cluster in master omitted ...
-
-	worker.on('message', function(message) {
+instead of this code in a worker:
+```	
+	process.on('message', function(message) {
 		if (message.type && message.type === 'myMessageType')
 			doSomethingWithMyMessage(message);
 	});
 ```
 use this:
-```
-	// code for creating cluster in master omitted ...
+```	
+	function doSomethingWithMyMessage(msg) { // will only get called when message type matches }
 
 	var Messaging = require('forkraft').Messaging;
-
 	Messaging.on('myMessageType', doSomethingWithMyMessage);
 ```
+also works the same in master process, instead of:
+```
+	var cluster = require('cluster');
+	
+	// spawn cluster and message handler code omitted...
+
+	for (var id in cluster.workers) {		 
+		cluster.workers[id].on('message', messageHandler);
+	}
+```
+do this:
+```
+	function doSomethingWithMyMessage(msg) { // will only get called when message type matches }
+
+	var Messaging = require('forkraft').Messaging;
+	Messaging.on('myMessageType', doSomethingWithMyMessage);
+```
+Yes, it looks exactly the same as the code used in the worker...
 ####Broadcast
 at master:
 ```
