@@ -7,7 +7,7 @@ var clusterize = require('forkraft').clusterize;
 
 describe('clusterize', function () {
 
-	it.skip('spawns a worker process', function(done) {
+	it('spawns a worker process', function(done) {
 		this.timeout(10000);
 		
 		var simpleServer = path.join(__dirname, 'testlib', 'simpleserver.js');
@@ -31,7 +31,7 @@ describe('clusterize', function () {
 		});
 	});
 
-	it('resolves master properly', function(done) {
+	it.skip('resolves master properly', function(done) {
 		/*
 			run a server like this:
 			clusterize('./testlib/testworker.js', './testlib/testmaster.js');
