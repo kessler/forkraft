@@ -1,6 +1,6 @@
 {
   "name": "forkraft",
-  "version": "1.1.5",
+  "version": "1.1.7",
   "description": "a helper library for cluster api",
   "main": "index.js",
   "repository": {
@@ -12,6 +12,9 @@
     "cluster",
     "worker"
   ],
+  "devDependencies": {
+    "forkraft": "*"
+  },
   "author": "Yaniv Kessler",
   "license": "MIT",
   "readmeFilename": "README.md"  

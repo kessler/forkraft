@@ -1,2 +1,6 @@
-var clusterize = require('../../lib/clusterize');
-clusterize(function() {}, 'testmaster.js');
+var clusterize = require('forkraft').clusterize;
+
+clusterize({
+	worker: 'testworker.js', 
+	master: 'testmaster.js'
+});

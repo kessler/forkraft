@@ -4,14 +4,13 @@ var child = require('child_process');
 var path = require('path');
 var $u = require('util');
 var clusterize = require('forkraft').clusterize;
-//var testmaster = require('./testlib/testmaster');
 
 describe('clusterize', function () {
 
-	it('spawns a worker process', function(done) {
+	it.skip('spawns a worker process', function(done) {
 		this.timeout(10000);
 		
-		var simpleServer = path.join(__dirname, 'testlib','simpleserver.js');
+		var simpleServer = path.join(__dirname, 'testlib', 'simpleserver.js');
 		
 		child.exec('node ' + simpleServer + ' hello', function(error, stdout, stderr) {
 			
