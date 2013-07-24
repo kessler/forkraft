@@ -3,7 +3,7 @@ var numCPUs = require('os').cpus().length;
 var child = require('child_process');
 var path = require('path');
 var $u = require('util');
-var clusterize = require('../lib/clusterize');
+var clusterize = require('forkraft').clusterize;
 //var testmaster = require('./testlib/testmaster');
 
 describe('clusterize', function () {
@@ -32,7 +32,7 @@ describe('clusterize', function () {
 		});
 	});
 
-	it.skip('resolves master properly', function(done) {
+	it('resolves master properly', function(done) {
 		/*
 			run a server like this:
 			clusterize('./testlib/testworker.js', './testlib/testmaster.js');

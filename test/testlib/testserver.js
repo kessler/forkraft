@@ -1,2 +1,2 @@
-var clusterize = require('../../lib/clusterize')
-clusterize('./testlib/testworker.js', './testlib/testmaster.js');
+var clusterize = require('../../lib/clusterize');
+clusterize(function() {}, 'testmaster.js');
