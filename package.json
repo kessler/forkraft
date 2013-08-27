@@ -1,11 +1,11 @@
 {
   "name": "forkraft",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "a helper library for cluster api",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kessler-y/forkraft.git"
+    "url": "https://github.com/kessler/forkraft.git"
   },
   "keywords": [
     "clusterize",
@@ -17,5 +17,5 @@
   },
   "author": "Yaniv Kessler",
   "license": "MIT",
-  "readmeFilename": "README.md"  
+  "readmeFilename": "README.md"
 }
