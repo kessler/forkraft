@@ -16,6 +16,15 @@ typical server.js:
 var clusterize = require('forkraft').clusterize;
 
 clusterize({
+	worker: 'worker.js',
+	master: 'master.js'
+});
+```
+slightly less typical:
+```
+var clusterize = require('forkraft').clusterize;
+
+clusterize({
 	worker: function() {
 	    console.log('I am a worker');
 	},
@@ -42,15 +51,6 @@ clusterize(
 	},
 	false,
 	0.5);
-```
-files instead of functions:
-```
-var clusterize = require('forkraft').clusterize;
-
-clusterize({
-	worker: 'worker.js',
-	master: 'master.js'
-});
 ```
 
 #### clusterize options reference:
