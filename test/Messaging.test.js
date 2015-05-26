@@ -61,7 +61,7 @@ describe('Messaging helper for clusters', function () {
 		
 		var fired = 0;
 
-		Messaging.once('test3', function(message) {			
+		Messaging.once('test3', function(message) {
 			assert.strictEqual(message, 3);
 
 			if (++fired === 2)
@@ -75,14 +75,14 @@ describe('Messaging helper for clusters', function () {
 	it('sends a message to a target', function () {
 		Messaging.send('boom', 4, processMock);
 		assert.strictEqual(processMock.sent.length, 1);
-		assert.deepEqual(processMock.sent[0], { __type: 'boom', __payload: 4 });		
+		assert.deepEqual(processMock.sent[0], { __type: 'boom', __payload: 4 });
 	});
 
 	it('sends a message via process.send', function () {
 		Messaging.send('boom', 5);
 
 		assert.strictEqual(processMock.sent.length, 1);
-		assert.deepEqual(processMock.sent[0], { __type: 'boom', __payload: 5 });		
+		assert.deepEqual(processMock.sent[0], { __type: 'boom', __payload: 5 });
 	});
 
 	it('broadcasts a message from master process to all workers', function() {
@@ -90,7 +90,7 @@ describe('Messaging helper for clusters', function () {
 		
 	 	Messaging.broadcast('boom', 6);
 	 	
-	 	for (var id in clusterMock.workers) {	 		
+	 	for (var id in clusterMock.workers) {	
 	 		var worker = clusterMock.workers[id];
 
 	 		assert.strictEqual(worker.sent.length, 1);
@@ -121,7 +121,6 @@ describe('Messaging helper for clusters', function () {
 
 	 	var anotherWorker = clusterMock.workers['2'];
 	 	assert.strictEqual(anotherWorker.sent.length, 1, 'worker should have received the message');
-	 	assert.deepEqual(anotherWorker.sent[0], { __type: 'boom', __payload: 7 });	 	
+	 	assert.deepEqual(anotherWorker.sent[0], { __type: 'boom', __payload: 7 });
 	});
 });
-

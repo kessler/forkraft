@@ -3,7 +3,7 @@ var clusterize = require('../../lib/clusterize');
 clusterize({
 	worker: function() {
 		console.log(process.env.text);
-		setTimeout(function() {			
+		setTimeout(function() {	
 			process.exit(0);	
 		}, 1000)
 	},
