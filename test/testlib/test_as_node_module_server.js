@@ -1,6 +1,6 @@
 var clusterize = require('forkraft').clusterize;
 
 clusterize({
-	worker: 'testworker.js', 
+	worker: 'testworker.js',
 	master: 'testmaster.js'
 });
