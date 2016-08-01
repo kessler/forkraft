@@ -12,7 +12,7 @@ features: clusterize, messaging
 
 ## clusterize
 typical server.js:
-```
+```js
 var clusterize = require('forkraft').clusterize;
 
 clusterize({
@@ -21,7 +21,7 @@ clusterize({
 });
 ```
 slightly less typical:
-```
+```js
 var clusterize = require('forkraft').clusterize;
 
 clusterize({
@@ -39,7 +39,7 @@ clusterize({
 
 ```
 Same as the above only this time called directly:
-```
+```js
 var clusterize = require('forkraft').clusterize;
 
 clusterize(
@@ -74,7 +74,7 @@ Built on top of a simple type/payload protocol
 
 ####Simple example
 master to worker:
-```
+```js
 	var Messaging = require('forkraft').Messaging;
 
 	Messaging.on('moo', function(payload) {
@@ -84,7 +84,7 @@ master to worker:
 	Messaging.send('boom', 'this is the payload', ...reference to worker or worker id...);
 ```
 worker to master
-```
+```js
 	var Messaging = require('forkraft').Messaging;
 
 	Messaging.on('boom', function(payload) {
@@ -94,21 +94,21 @@ worker to master
 ```
 ####More on receiving:
 this:
-```
+```js
 	function doSomethingWithMyMessage(msg) { // will only get called when message type matches }
 
 	var Messaging = require('forkraft').Messaging;
 	Messaging.on('myMessageType', doSomethingWithMyMessage);
 ```
 replaces this:
-```
+```js
 	process.on('message', function(message) {
 		if (message.type && message.type === 'myMessageType')
 			doSomethingWithMyMessage(message);
 	});
 ```
 also works the same in master process, instead of:
-```
+```js
 	var cluster = require('cluster');
 
 	// spawn cluster and message handler code omitted...
@@ -118,7 +118,7 @@ also works the same in master process, instead of:
 	}
 ```
 do this:
-```
+```js
 	function doSomethingWithMyMessage(msg) { // will only get called when message type matches }
 
 	var Messaging = require('forkraft').Messaging;
@@ -152,7 +152,7 @@ Yes, it looks exactly the same as the code used in the worker...
                   +--------+
 ```
 at master:
-```
+```js
 	// code for creating cluster in master omitted ...
 
 	var Messaging = require('forkraft').Messaging;
@@ -161,21 +161,21 @@ at master:
 	Messaging.broadcast({ type: 'boom' })
 ```
 at worker1:
-```
+```js
 	var Messaging = require('forkraft').Messaging;
 	Messaging.on('boom'), function(boomMessage) {
 		Messaging.broadcast({ type: 'bam' });
 	});
 ```
 at worker2:
-```
+```js
 var Messaging = require('forkraft').Messaging;
 Messaging.on('bam', function() {
 	console.log('boom on worker1 set off a bam on worker2');
 });
 ```
 at worker3:
-```
+```js
 var Messaging = require('forkraft').Messaging;
 Messaging.on('bam', function() {
 	console.log('boom on worker1 set off a bam on worker3');
